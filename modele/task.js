@@ -29,6 +29,8 @@
  *              category: 'Géométrie'
  *              schoolsubject: 'Mathémathiques'
  */
+
+//unused in android
 module.exports.getTasksByClassId = async (idClass, client) => {
     const {rows: tasks} = await client.query(`
 
@@ -43,6 +45,12 @@ module.exports.getTasksByClassId = async (idClass, client) => {
         `, [idClass]);
     return tasks;
 }
+
+/*
+        SELECT COUNT(task.id)
+        FROM task
+        WHERE IdClass = $1 AND date = current_date
+*/
 module.exports.getTodayTasksByClassId = async (idClass, client) => {
     const {rows: tasks} = await client.query(`
 
@@ -58,6 +66,13 @@ module.exports.getTodayTasksByClassId = async (idClass, client) => {
     `, [idClass]);
     return tasks;
 }
+
+/* Tu vas me maudire mais je n'utilise pas  subject et subSubject donc pas besoin de left join ^^ Maintenant on peut le laisser pour le futur de l'app
+
+        SELECT task, title, type, TO_CHAR(task.date, 'DD Mon YYYY') as date
+        FROM task
+        WHERE IdClass = $1 AND (date between (current_date) and (current_date + '1 week':: interval))
+ */
 module.exports.getWeekTasksByClassId = async (idClass, client) => {
     const {rows: tasks} = await client.query(`
 

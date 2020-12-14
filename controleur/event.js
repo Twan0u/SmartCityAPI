@@ -19,6 +19,7 @@ module.exports.getEvents = async (req, res) => {
     }
 }
 
+
 module.exports.getTodayEvents = async (req, res) => {
     const client = await pool.connect();
     try{

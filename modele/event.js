@@ -22,14 +22,15 @@
  *              description: 'Ne pas oublier son masque'
  *              date: '22 Dec 2020'
  */
+/* majuscule à Name bizarre!!! */
 module.exports.getEvents = async (idClass, client) => {
     const {rows: events} = await client.query("SELECT id, Name, date, description FROM Event WHERE ID = $1", [idClass]);
     return events;
 }
 
+/* unused*/
 module.exports.getTodayEventsByClassId = async (idClass, client) => {
     const {rows: events} = await client.query(`
-
         SELECT id,name,description, TO_CHAR(date, 'DD Mon YYYY') as date
         FROM event
         WHERE IdClass = 1
@@ -38,9 +39,16 @@ module.exports.getTodayEventsByClassId = async (idClass, client) => {
         `, [idClass]);
     return events;
 }
+
+//correction
+/*
+       SELECT COUNT(id)
+       FROM event
+       WHERE IdClass = 1
+         and (date between (current_date :: interval) and (current_date + '1 week':: interval))
+*/
 module.exports.getWeekEventsByClassId = async (idClass, client) => {
     const {rows: events} = await client.query(`
-
         SELECT id,name,description, TO_CHAR(date, 'DD Mon YYYY') as date
         FROM event
         WHERE IdClass = 1
@@ -50,6 +58,7 @@ module.exports.getWeekEventsByClassId = async (idClass, client) => {
     return events;
 }
 
+/* majuscule a Name et Date*/
 module.exports.postEvent = async (name, date, description, idClass) => {
     return await client.query("INSERT INTO Event(Name, Date, Description, IdClass)VALUES($1,$2,$3,$4)", [name, date, description, idClass]);
 }
