@@ -30,30 +30,30 @@
  *              schoolsubject: 'Mathémathiques'
  */
 
-//unused in android
 module.exports.getTasksByClassId = async (idClass, client) => {
     const {rows: tasks} = await client.query(`
-
         SELECT task.id as id,task.title as title,task.type as type, TO_CHAR(task.date, 'DD Mon YYYY') as date, SchoolSubjectSubCategory.name as category, SchoolSubjectCategory.name as schoolsubject
         FROM task
         LEFT JOIN SchoolSubjectSubCategory
         ON SchoolSubjectSubCategory.id = task.idSchoolSubjectSubCategory
         LEFT JOIN SchoolSubjectCategory
         ON SchoolSubjectCategory.id = SchoolSubjectSubCategory.IdSchoolSubjectCategory
-        WHERE IdClass = $1
-
+        WHERE idClass = $1
         `, [idClass]);
     return tasks;
 }
 
-/*
+module.exports.getCountTodayTasksByClassId = async (idClass, client) => {
+    const {rows: count} = await client.query(`
         SELECT COUNT(task.id)
         FROM task
         WHERE IdClass = $1 AND date = current_date
-*/
+    `, [idClass]);
+    return count[0];
+}
+
 module.exports.getTodayTasksByClassId = async (idClass, client) => {
     const {rows: tasks} = await client.query(`
-
         SELECT task.id as id,task.title as title,task.type as type, TO_CHAR(task.date, 'DD Mon YYYY') as date, SchoolSubjectSubCategory.name as category, SchoolSubjectCategory.name as schoolsubject
         FROM task
         LEFT JOIN SchoolSubjectSubCategory
@@ -62,17 +62,10 @@ module.exports.getTodayTasksByClassId = async (idClass, client) => {
         ON SchoolSubjectCategory.id = SchoolSubjectSubCategory.IdSchoolSubjectCategory
         WHERE IdClass = $1
             and date = current_date
-
     `, [idClass]);
     return tasks;
 }
 
-/* Tu vas me maudire mais je n'utilise pas  subject et subSubject donc pas besoin de left join ^^ Maintenant on peut le laisser pour le futur de l'app
-
-        SELECT task, title, type, TO_CHAR(task.date, 'DD Mon YYYY') as date
-        FROM task
-        WHERE IdClass = $1 AND (date between (current_date) and (current_date + '1 week':: interval))
- */
 module.exports.getWeekTasksByClassId = async (idClass, client) => {
     const {rows: tasks} = await client.query(`
 
@@ -83,7 +76,7 @@ module.exports.getWeekTasksByClassId = async (idClass, client) => {
         LEFT JOIN SchoolSubjectCategory
         ON SchoolSubjectCategory.id = SchoolSubjectSubCategory.IdSchoolSubjectCategory
         WHERE IdClass = $1
-            and (date between (current_date + '1 day':: interval) and (current_date + '1 day':: interval + '1 week':: interval))
+            and (date between current_date  and (current_date  '1 week':: interval))
     
     `, [idClass]);
 

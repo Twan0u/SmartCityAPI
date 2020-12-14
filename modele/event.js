@@ -22,38 +22,42 @@
  *              description: 'Ne pas oublier son masque'
  *              date: '22 Dec 2020'
  */
-/* majuscule à Name bizarre!!! */
+
 module.exports.getEvents = async (idClass, client) => {
-    const {rows: events} = await client.query("SELECT id, Name, date, description FROM Event WHERE ID = $1", [idClass]);
-    return events;
-}
-
-/* unused*/
-module.exports.getTodayEventsByClassId = async (idClass, client) => {
     const {rows: events} = await client.query(`
-        SELECT id,name,description, TO_CHAR(date, 'DD Mon YYYY') as date
-        FROM event
-        WHERE IdClass = 1
-          and date = current_date
-
+        SELECT id, name, date, description 
+        FROM Event 
+        WHERE id = $1
         `, [idClass]);
     return events;
 }
 
-//correction
-/*
-       SELECT COUNT(id)
-       FROM event
-       WHERE IdClass = 1
-         and (date between (current_date :: interval) and (current_date + '1 week':: interval))
-*/
+module.exports.getTodayEventsByClassId = async (idClass, client) => {
+    const {rows: events} = await client.query(`
+        SELECT id,name,description, TO_CHAR(date, 'DD Mon YYYY') as date
+        FROM event
+        WHERE idClass = 1
+          and date = current_date
+        `, [idClass]);
+    return events;
+}
+
+module.exports.getCountWeekEventsByClassId= async (idClass, client) => {
+    const {rows: events} = await client.query(`
+        SELECT COUNT(id)
+        FROM Event
+        WHERE idClass = 1
+          and (date between current_date and (current_date + '1 week':: interval))
+          `, [idClass]);
+    return events;
+}
+
 module.exports.getWeekEventsByClassId = async (idClass, client) => {
     const {rows: events} = await client.query(`
         SELECT id,name,description, TO_CHAR(date, 'DD Mon YYYY') as date
         FROM event
         WHERE IdClass = 1
-          and (date between (current_date + '1 day':: interval) and (current_date + '1 day':: interval + '1 week':: interval))
-
+          and (date between current_date  and (current_date + '1 week':: interval))
         `, [idClass]);
     return events;
 }
@@ -64,14 +68,15 @@ module.exports.postEvent = async (name, date, description, idClass) => {
 }
 
 module.exports.updateEvent = async (id, name, date, description) => {
-    const query =  `UPDATE Event
-        SET Name = $2
+    return await client.query(`
+        UPDATE Event
+        SET 
+            Name = $2
             Date = $3
             Description = $4
-        WHERE id = $1`;
-    return await client.query(query, [id, name, date, description]);
+        WHERE id = $1`, [id, name, date, description]);
 }
 
 module.exports.deleteEvent = async (id) => {
-    return await client.query("DELETE FROM Event WHERE id=$1", [id, name, date, description]);
+    return await client.query("DELETE FROM Event WHERE id=$1", [id]);
 }

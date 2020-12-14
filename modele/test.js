@@ -70,7 +70,7 @@ module.exports.getWeekTestsByClassId = async (idClass, client) => {
         LEFT JOIN SchoolSubjectCategory
         ON SchoolSubjectCategory.id = SchoolSubjectSubCategory.IdSchoolSubjectCategory
         WHERE IdClass = $1
-          and (date between (current_date + '1 day':: interval) and (current_date + '1 day':: interval + '1 week':: interval))
+          and (date between current_date and (current_date + '1 week':: interval))
     `, [idClass]);
     return tests;
 }
