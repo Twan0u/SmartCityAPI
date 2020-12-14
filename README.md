@@ -1,1 +1,1 @@
-# SmartCityAPI
+# SmartClassAPI
