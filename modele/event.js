@@ -25,9 +25,9 @@
 
 module.exports.getEvents = async (idClass, client) => {
     const {rows: events} = await client.query(`
-        SELECT id, name, date, description 
+        SELECT id, name, TO_CHAR(date, 'DD Mon YYYY') as date, description 
         FROM Event 
-        WHERE id = $1
+        WHERE idclass = $1
         `, [idClass]);
     return events;
 }
@@ -36,7 +36,7 @@ module.exports.getTodayEventsByClassId = async (idClass, client) => {
     const {rows: events} = await client.query(`
         SELECT id,name,description, TO_CHAR(date, 'DD Mon YYYY') as date
         FROM event
-        WHERE idClass = 1
+        WHERE idClass = $1
           and date = current_date
         `, [idClass]);
     return events;
