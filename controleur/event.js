@@ -77,9 +77,8 @@ module.exports.updateEvent = (req, res) => {
 
 module.exports.deleteEvent = (req, res) => {
     const id = req.params.id;
-    const response = EventModel.deleteEvent(id);
-    if(response){
-        res.sendStatus(204);
+    if(EventModel.deleteEvent(id)){
+        res.sendStatus(200);
     } else {
         res.sendStatus(500);
     }
