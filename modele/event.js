@@ -63,11 +63,14 @@ module.exports.getWeekEventsByClassId = async (idClass, client) => {
 }
 
 /* majuscule a Name et Date*/
-module.exports.postEvent = async (name, date, description, idClass) => {
-    return await client.query("INSERT INTO Event(Name, Date, Description, IdClass)VALUES($1,$2,$3,$4)", [name, date, description, idClass]);
+module.exports.postEvent = async (name, date, description, idClass, client) => {
+    return await client.query(`INSERT INTO Event(Name, Date, Description, IdClass)
+    VALUES
+    ($1,$2,$3,$4);
+        `, [name, date, description, idClass]);
 }
 
-module.exports.updateEvent = async (id, name, date, description) => {
+module.exports.updateEvent = async (id, name, date, description, client) => {
     return await client.query(`
         UPDATE Event
         SET 
@@ -77,6 +80,6 @@ module.exports.updateEvent = async (id, name, date, description) => {
         WHERE id = $1`, [id, name, date, description]);
 }
 
-module.exports.deleteEvent = async (id) => {
+module.exports.deleteEvent = async (id,client ) => {
     return await client.query("DELETE FROM Event WHERE id=$1", [id]);
 }

@@ -52,22 +52,24 @@ module.exports.getWeekEvents = async (req, res) => {
     }
 }
 
-module.exports.postEvent= (req, res) => {
+module.exports.postEvent= async(req, res) => {
+    const client = await pool.connect();
     const {name, date, description} = req.body;
     const id = req.params.id;
-
-    const response = EventModel.postEvent(id, name, date, description);
-    if(response){
-        res.sendStatus(201);
-    } else {
+    console.log(req.body);
+    try{
+        let result = EventModel.postEvent(name, date, description,id,client);
+        return res.sendStatus(201);
+    }catch (e) {
         res.sendStatus(500);
     }
 }
 
-module.exports.updateEvent = (req, res) => {
+module.exports.updateEvent = async (req, res) => {
+    const client = await pool.connect();
     const {name, date, description} = req.body;
     const id = req.params.id;
-    const response = EventModel.updateEvent(id, name, date, description);
+    const response = EventModel.updateEvent(id, name, date, description, client);
     if(response){
         res.sendStatus(204);
     } else {
@@ -75,9 +77,10 @@ module.exports.updateEvent = (req, res) => {
     }
 }
 
-module.exports.deleteEvent = (req, res) => {
+module.exports.deleteEvent = async (req, res) => {
+    const client = await pool.connect();
     const id = req.params.id;
-    if(EventModel.deleteEvent(id)){
+    if(EventModel.deleteEvent(id,client)){
         res.sendStatus(200);
     } else {
         res.sendStatus(500);
