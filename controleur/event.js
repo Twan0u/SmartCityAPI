@@ -55,10 +55,10 @@ module.exports.getWeekEvents = async (req, res) => {
 module.exports.postEvent= async(req, res) => {
     const client = await pool.connect();
     const {name, date, description} = req.body;
-    const id = req.params.id;
+    const id = req.user.id;
     console.log(req.body);
     try{
-        let result = EventModel.postEvent(name, date, description,id,client);
+        let result = EventModel.postEvent(name, date, description, id,client);
         return res.sendStatus(201);
     }catch (e) {
         res.sendStatus(500);
@@ -68,7 +68,7 @@ module.exports.postEvent= async(req, res) => {
 module.exports.updateEvent = async (req, res) => {
     const client = await pool.connect();
     const {name, date, description} = req.body;
-    const id = req.params.id;
+    const id = req.user.id;
     const response = EventModel.updateEvent(id, name, date, description, client);
     if(response){
         res.sendStatus(204);
