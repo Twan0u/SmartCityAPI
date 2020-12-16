@@ -9,7 +9,6 @@ let TutorDB = require ("../modele/tutor");
 
 module.exports.getToken = async (req, res) => {
     const client = await pool.connect();
-    console.log(req.body);
     const username = req.body.username;
     const password = req.body.password;
 
