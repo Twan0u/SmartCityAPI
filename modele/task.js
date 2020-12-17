@@ -92,14 +92,14 @@ module.exports.postTask = async (title,type,date,idSubCat, idClass,client) => {
 }
 
 module.exports.updateTask = async (id,title,type,date,idSubCat,client) => {
-    const query =  `UPDATE Task
+    return await client.query(`
+        UPDATE Task
         SET 
             title = $2
             type = $3
             date = $4
             IdSchoolSubjectSubCategory = $5
-        WHERE id = $1`;
-    return await client.query(query, [id,title,type,date,idSubCat]);
+        WHERE id = $1`, [id,title,type,date,idSubCat]);
 }
 
 module.exports.deleteTask = async (id,client) => {

@@ -56,8 +56,8 @@ module.exports.postEvent= async(req, res) => {
     const client = await pool.connect();
     try{
         const {name, date, description} = req.body;
-        const id = req.user.id;
-        let result = EventModel.postEvent(name, date, description, id,client);
+        const userid = req.user.id;
+        let result = EventModel.postEvent(name, date, description, userid,client);
         return res.sendStatus(201);
     }catch (e) {
         res.sendStatus(500);
@@ -67,8 +67,14 @@ module.exports.postEvent= async(req, res) => {
 module.exports.updateEvent = async (req, res) => {
     const client = await pool.connect();
     try{
-        const response = EventModel.updateEvent(req.params.id, req.body.name, req.body.date, req.body.description, client);
-        res.sendStatus(200);
+        const idText = req.params.id; //attention ! Il s'agit de texte !
+        const id = parseInt(idText);
+        if(isNaN(id)){
+            res.sendStatus(400);
+        } else {
+            const response = EventModel.updateEvent(id, req.body.name, req.body.date, req.body.description, client);
+            res.sendStatus(200);
+        }
     }catch (e) {
         res.sendStatus(500);
     }

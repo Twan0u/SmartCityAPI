@@ -69,19 +69,23 @@ module.exports.postTask = async (req, res) => {
 
 module.exports.updateTask = async(req, res) => {
     const client = await pool.connect();
-    const idClass = req.user.idclass;
-    const {title, type, date, idSchoolSubjectSubCategory} = req.body;
-    const idText = req.params.id; //attention ! Il s'agit de texte !
-    const id = parseInt(idText);
-    if(isNaN(id)){
-        res.sendStatus(400);
-    } else {
-        const response = TaskModel.updateTask(id, title, type, date, idSchoolSubjectSubCategory, idClass,client);
-        if(response){
-            res.sendStatus(200);
+    try {
+        const idClass = req.user.idclass;
+        const {title, type, date, idSchoolSubjectSubCategory} = req.body;
+        const idText = req.params.id; //attention ! Il s'agit de texte !
+        const id = parseInt(idText);
+        if (isNaN(id)) {
+            res.sendStatus(400);
         } else {
-            res.sendStatus(404);
+            const response = TaskModel.updateTask(id, title, type, date, idSchoolSubjectSubCategory, client);
+            if (response) {
+                res.sendStatus(200);
+            } else {
+                res.sendStatus(404);
+            }
         }
+    }catch (e) {
+        res.sendStatus(500);
     }
 }
 
