@@ -72,7 +72,7 @@ module.exports.postEvent = async (name, date, description, idClass, client) => {
 
 module.exports.updateEvent = async (id, name, date, description, client) => {
     return await client.query(`
-        UPDATE event SET name=$2, date = $3, description = $3
+        UPDATE event SET name=$2, date = $3, description = $4
         WHERE id = $1;
         `, [id, name, date, description]);
 }
