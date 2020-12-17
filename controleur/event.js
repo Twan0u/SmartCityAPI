@@ -68,6 +68,7 @@ module.exports.updateEvent = async (req, res) => {
     const client = await pool.connect();
     try{
         const {name, date, description} = req.body;
+        console.log(req.body);
         const id = req.user.id;
         const response = EventModel.updateEvent(id, name, date, description, client);
         res.sendStatus(200);
