@@ -186,8 +186,8 @@ router.post('/',authToken,permit("teacher"), EventControleur.postEvent);
 
 /**
  * @swagger
- * /events/id:
- *  patch:
+ * /events/id/update:
+ *  post:
  *      summary: modify an event
  *      tags:
  *          - event
@@ -219,10 +219,10 @@ router.post('/',authToken,permit("teacher"), EventControleur.postEvent);
  *              description: Unexpected error.
  *
  */
-router.patch('/:id',authToken,permit("teacher"), EventControleur.updateEvent);
+router.post('/:id/update',authToken,permit("teacher"), EventControleur.updateEvent);
 /**
  * @swagger
- * /events/id:
+ * /events/id/delete:
  *  delete:
  *      summary: Delete an event
  *      tags:
@@ -249,6 +249,6 @@ router.patch('/:id',authToken,permit("teacher"), EventControleur.updateEvent);
  *              description: Unexpected error.
  *
  */
-router.delete('/:id',authToken,permit("teacher"), EventControleur.deleteEvent);
+router.get('/:id/delete',authToken,permit("teacher"), EventControleur.deleteEvent);
 
 module.exports = router;

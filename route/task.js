@@ -189,8 +189,8 @@ router.get('/week',authToken,permit("teacher","pupil"), TaskController.getWeekTa
 router.post('/',authToken,permit("teacher"), TaskController.postTask);
 /**
  * @swagger
- * /tasks/id:
- *  patch:
+ * /tasks/id/update:
+ *  post:
  *      summary: modify a task
  *      tags:
  *          - task
@@ -222,11 +222,11 @@ router.post('/',authToken,permit("teacher"), TaskController.postTask);
  *              description: Unexpected error.
  *
  */
-router.patch('/:id',authToken,permit("teacher"), TaskController.updateTask);
+router.post('/:id/update',authToken,permit("teacher"), TaskController.updateTask);
 /**
  * @swagger
- * /tasks/id:
- *  delete:
+ * /tasks/id/delete:
+ *  get:
  *      summary: Delete a task
  *      tags:
  *          - task
@@ -252,6 +252,6 @@ router.patch('/:id',authToken,permit("teacher"), TaskController.updateTask);
  *              description: Unexpected error.
  *
  */
-router.delete('/:id',authToken,permit("teacher"), TaskController.deleteTask);
+router.delete('/:id/delete',authToken,permit("teacher"), TaskController.deleteTask);
 
 module.exports = router;
