@@ -252,6 +252,6 @@ router.post('/:id/update',authToken,permit("teacher"), TaskController.updateTask
  *              description: Unexpected error.
  *
  */
-router.delete('/:id/delete',authToken,permit("teacher"), TaskController.deleteTask);
+router.get('/:id/delete',authToken,permit("teacher"), TaskController.deleteTask);
 
 module.exports = router;
