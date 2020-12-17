@@ -55,7 +55,7 @@ module.exports.getWeekTasks = async (req, res) => {
 
 module.exports.postTask = async (req, res) => {
     const client = await pool.connect();
-    const idClass = req.user.idclass
+    const idClass = req.user.idclass;
     const {title, type, date, idSchoolSubjectSubCategory} = req.body;
     try{
         await TaskModel.postTask(title, type, date, idSchoolSubjectSubCategory, idClass, client);
