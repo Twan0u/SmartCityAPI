@@ -223,7 +223,7 @@ router.post('/:id/update',authToken,permit("teacher"), EventControleur.updateEve
 /**
  * @swagger
  * /events/id/delete:
- *  delete:
+ *  get:
  *      summary: Delete an event
  *      tags:
  *          - event
