@@ -1,7 +1,7 @@
 const ResultModele = require("../modele/result");
 
 module.exports.getResult = (req, res) => {
-    const idTexte = req.params.id; //attention ! Il s'agit de texte !
+    const idTexte = req.params.id;
     const id = parseInt(idTexte);
     if(isNaN(id)){
         res.sendStatus(400);
@@ -10,7 +10,9 @@ module.exports.getResult = (req, res) => {
             const result = ResultModele.getResult(id);
             res.json(result);
         } catch (error){
-            res.sendStatus(404);
+            res.sendStatus(500);
+        } finally {
+            client.release();
         }
     }
 }

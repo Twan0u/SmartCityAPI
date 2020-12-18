@@ -96,11 +96,18 @@ module.exports.deleteTask = async (req, res) => {
     if(isNaN(id)){
         res.sendStatus(400);
     } else {
-        const response = TaskModel.deleteTask(id,client);
-        if(response){
-            res.sendStatus(200);
-        } else {
-            res.sendStatus(404);
+        try{
+            const response = TaskModel.deleteTask(id,client);
+            if(response){
+                res.sendStatus(200);
+            } else {
+                res.sendStatus(404);
+            }
+        } catch (error){
+            res.sendStatus(500);
+        } finally {
+            client.release();
         }
+
     }
 }

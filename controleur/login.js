@@ -36,8 +36,7 @@ module.exports.getToken = async (req, res) => {
    }else{
        if(await bcrypt.compare(password,user.password)){
            delete user.password;//prevent password to be passed in the jwt
-           const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET,{ expiresIn: process.env.ACCESS_TOKEN_TIMEOUT });//todo on à retiré le expire pour le dev
-           //const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET);
+           const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET,{ expiresIn: process.env.ACCESS_TOKEN_TIMEOUT });
            res.json(accessToken);
            delete user.password;
        }else{
@@ -45,11 +44,3 @@ module.exports.getToken = async (req, res) => {
        }
    }
 };
-
-/*
-select login,password,firstname,lastname,idclass, 'teacher' as role from teacher
-union
-select login,password,firstname,lastname,idclass, 'pupil' as role from pupil
-union
-select login,password,firstname,lastname,null as idclass, 'tutor' as role  from tutor
-* */

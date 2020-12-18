@@ -79,28 +79,40 @@ module.exports.updateTest = async(req, res) => {
     if(isNaN(idTest)){
         res.sendStatus(400);
     } else {
-        const response = TestModel.updateTest(idTest, title, maxValue, date, idSchoolSubjectSubCategory, idClass,client);
-        if(response){
-            res.sendStatus(200);
-        } else {
-            res.sendStatus(404);
+        try{
+            const response = TestModel.updateTest(idTest, title, maxValue, date, idSchoolSubjectSubCategory, idClass,client);
+            if(response){
+                res.sendStatus(200);
+            } else {
+                res.sendStatus(404);
+            }
+        } catch (error){
+            res.sendStatus(500);
+        } finally {
+            client.release();
         }
     }
 }
 
 module.exports.deleteTest = async (req, res) => {
     const client = await pool.connect();
-    const idTestText = req.params.id; //attention ! Il s'agit de texte !
-    const idTest = parseInt(idTestText);
-    if(isNaN(idTest)){
-        res.sendStatus(400);
-    } else {
-        const response = TestModel.deleteTest(idTest,client);
-        if(response){
-            res.sendStatus(200);
+    try{
+        const idTestText = req.params.id; //attention ! Il s'agit de texte !
+        const idTest = parseInt(idTestText);
+        if(isNaN(idTest)){
+            res.sendStatus(400);
         } else {
-            res.sendStatus(404);
+            const response = TestModel.deleteTest(idTest,client);
+            if(response){
+                res.sendStatus(200);
+            } else {
+                res.sendStatus(404);
+            }
         }
+    } catch (error){
+        res.sendStatus(500);
+    } finally {
+        client.release();
     }
 }
 

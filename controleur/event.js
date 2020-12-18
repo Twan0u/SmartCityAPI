@@ -59,8 +59,10 @@ module.exports.postEvent= async(req, res) => {
         const userid = req.user.id;
         let result = EventModel.postEvent(name, date, description, userid,client);
         return res.sendStatus(201);
-    }catch (e) {
+    } catch (error){
         res.sendStatus(500);
+    } finally {
+        client.release();
     }
 }
 
@@ -75,17 +77,22 @@ module.exports.updateEvent = async (req, res) => {
             const response = EventModel.updateEvent(id, req.body.name, req.body.date, req.body.description, client);
             res.sendStatus(200);
         }
-    }catch (e) {
+    } catch (error){
         res.sendStatus(500);
+    } finally {
+        client.release();
     }
 }
 
 module.exports.deleteEvent = async (req, res) => {
     const client = await pool.connect();
     const id = req.params.id;
-    if(EventModel.deleteEvent(id,client)){
+    try{
+        EventModel.deleteEvent(id,client);
         res.sendStatus(200);
-    } else {
+    } catch (error){
         res.sendStatus(500);
+    } finally {
+        client.release();
     }
 }
