@@ -18,6 +18,6 @@ module.exports.getPupils = async (id, client) => {
 module.exports.add = async (username,password,firstname,lastname,phonenumber,client) => {
     const {rows: user} = await client.query(`
         INSERT INTO Tutor(username,password,firstname,lastname,phonenumber)
-        VALUES($1,$2);`, [username,password,firstname,lastname,phonenumber]);
+        VALUES($1,$2,$3,$4,$5);`, [username,password,firstname,lastname,phonenumber]);
     return user;
 }

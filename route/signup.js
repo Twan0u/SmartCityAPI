@@ -20,6 +20,12 @@ const router = require("express").Router();
  *                              type: string
  *                          password:
  *                              type: string
+ *                          firstname:
+ *                              type: string
+ *                          lastname:
+ *                              type: string
+ *                          phone:
+ *                              type: string
  *      responses:
  *          '200':
  *              description: User has been signed up
