@@ -16,7 +16,7 @@ module.exports.signUp = async (req, res) => {
     if (!username || !password || !firstname || !lastname ){return res.sendStatus(400);}//bad request
 
     try{
-        password = bcrypt.hash(password);
+        password = bcrypt.hash(password,10);
         await TutorDB.add(username,password,firstname,lastname,phoneNumber, client);
     } catch (error){
         return res.sendStatus(500);
