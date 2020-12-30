@@ -92,7 +92,7 @@ CREATE TABLE Tutor(
     Password varchar(255) NOT NULL,
     FirstName varchar(255) NOT NULL,
     LastName varchar(255) NOT NULL,
-    PhoneNumber varchar(255) NOT NULL
+    PhoneNumber varchar(255)
 );
 INSERT INTO Tutor(Login, Password, FirstName, LastName, PhoneNumber)
 VALUES

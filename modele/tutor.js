@@ -15,9 +15,18 @@ module.exports.getPupils = async (id, client) => {
     return pupils;
 }
 
-module.exports.add = async (username,password,firstname,lastname,phonenumber,client) => {
+module.exports.loginDoesExist = async (login, client) =>{
+    const {rows: data} = await client.query(`
+    select count (id)
+    from tutor
+    where login = $1
+    `,[login]);
+    return (data[0].count > 0);
+}
+
+module.exports.add = async (login,password,firstname,lastname,phonenumber,client) => {
     const {rows: user} = await client.query(`
-        INSERT INTO Tutor(username,password,firstname,lastname,phonenumber)
-        VALUES($1,$2,$3,$4,$5);`, [username,password,firstname,lastname,phonenumber]);
+        INSERT INTO Tutor(login,password,firstname,lastname,PhoneNumber)
+        VALUES($1,$2,$3,$4,$5);`, [login,password,firstname,lastname,phonenumber]);
     return user;
 }

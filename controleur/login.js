@@ -12,6 +12,9 @@ module.exports.getToken = async (req, res) => {
     const username = req.body.username;
     const password = req.body.password;
 
+    console.log("login with :" + req.body);
+
+
     let user = undefined;
 
     if (!username || !password){return res.sendStatus(400);}//bad request : nothing in body
