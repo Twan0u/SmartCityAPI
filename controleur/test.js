@@ -98,7 +98,7 @@ module.exports.updateTest = async(req, res) => {
     const client = await pool.connect();
 
     try{
-    console.log(req.body);
+
     const {title, maxvalue, date, idSchoolSubjectSubCategory} = req.body;
     if(!title||!maxvalue||!date||!idSchoolSubjectSubCategory){return res.sendStatus(400);}//missing data for post
 
