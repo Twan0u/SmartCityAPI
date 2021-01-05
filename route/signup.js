@@ -31,7 +31,15 @@ const router = require("express").Router();
  *              description: User has been signed up
  *          '400':
  *              description: Missing username or password
- *          '5XX':
+ *          '401':
+ *              description: Auth is needed to perform this action.
+ *          '403':
+ *              description: The role of the user does not permit that action
+ *          '409':
+ *              description: Username already exists
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
  *              description: Unexpected error.
  *
  */

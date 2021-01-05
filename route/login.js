@@ -29,7 +29,11 @@ const router = require("express").Router();
  *              description: Wrong username or password
  *          '404':
  *              description: username does not exist
- *          '5XX':
+ *          '403':
+ *              description: The role of the user does not permit that action
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
  *              description: Unexpected error.
  *
  */

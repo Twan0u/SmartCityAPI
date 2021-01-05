@@ -1,6 +1,9 @@
 const TestController = require("../controleur/test");
 const router = require("express").Router();
 
+const authToken = require("../middleware/authToken").authToken;
+const permit = require('../middleware/roleAuth').permit;
+
 /**
  * @swagger
  * /tests:
@@ -30,12 +33,12 @@ const router = require("express").Router();
  *                          items:
  *                              $ref: '#/components/schemas/Test'
  *          '401':
- *              description: Authorization information is missing or invalid.
+ *              description: Auth is needed to perform this action.
  *          '403':
  *              description: The role of the user does not permit that action
- *          '404':
- *              description: No task was found
- *          '5XX':
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
  *              description: Unexpected error.
  *
  */
@@ -69,12 +72,12 @@ router.get('/',authToken,permit("teacher","pupil"), TestController.getTests);
  *                          items:
  *                              $ref: '#/components/schemas/Test'
  *          '401':
- *              description: Authorization information is missing or invalid.
+ *              description: Auth is needed to perform this action.
  *          '403':
  *              description: The role of the user does not permit that action
- *          '404':
- *              description: No task was found
- *          '5XX':
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
  *              description: Unexpected error.
  *
  */
@@ -108,12 +111,12 @@ router.get('/unsigned',authToken,permit("pupil"), TestController.getUnsigned);
  *                          items:
  *                              $ref: '#/components/schemas/Test'
  *          '401':
- *              description: Authorization information is missing or invalid.
+ *              description: Auth is needed to perform this action.
  *          '403':
  *              description: The role of the user does not permit that action
- *          '404':
- *              description: No task was found
- *          '5XX':
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
  *              description: Unexpected error.
  *
  */
@@ -147,12 +150,12 @@ router.get('/today',authToken,permit("teacher","pupil"), TestController.getToday
  *                          items:
  *                              $ref: '#/components/schemas/Test'
  *          '401':
- *              description: Authorization information is missing or invalid.
+ *              description: Auth is needed to perform this action.
  *          '403':
  *              description: The role of the user does not permit that action
- *          '404':
- *              description: No task was found
- *          '5XX':
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
  *              description: Unexpected error.
  *
  */
@@ -175,6 +178,16 @@ router.get('/week',authToken,permit("teacher","pupil"), TestController.getWeekTe
  *                  format: 'DDD MMM YYY'
  *              idSchoolSubjectSubCategory:
  *                  type: int
+ *          example:
+ *              title: 'verbes en -er'
+ *              maxvalue: 20
+ *              date: '2020-11-30'
+ *              idSchoolSubjectSubCategory: 1
+ *          required:
+ *              - title
+ *              - maxvalue
+ *              - date
+ *              - idSchoolSubjectSubCategory
  */
 
 /**
@@ -204,11 +217,15 @@ router.get('/week',authToken,permit("teacher","pupil"), TestController.getWeekTe
  *      responses:
  *          '200':
  *              description: Object has been added
+ *          '400':
+ *              description: body of request is invalid
  *          '401':
- *              description: Authorization information is missing or invalid.
+ *              description: Auth is needed to perform this action.
  *          '403':
  *              description: The role of the user does not permit that action
- *          '5XX':
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
  *              description: Unexpected error.
  *
  */
@@ -241,11 +258,15 @@ router.post('/',authToken,permit("teacher"), TestController.addTest);
  *      responses:
  *          '200':
  *              description: Object has been added
+ *          '400':
+ *              description: body if request is invalid or id in url path is invalid
  *          '401':
- *              description: Authorization information is missing or invalid.
+ *              description: Auth is needed to perform this action.
  *          '403':
  *              description: The role of the user does not permit that action
- *          '5XX':
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
  *              description: Unexpected error.
  *
  */
@@ -272,11 +293,15 @@ router.patch('/:id',authToken,permit("teacher"), TestController.updateTest);
  *      responses:
  *          '200':
  *              description: Object has been deleted
+ *          '400':
+ *              description: id in url path is invalid
  *          '401':
- *              description: Authorization information is missing or invalid.
+ *              description: Auth is needed to perform this action.
  *          '403':
  *              description: The role of the user does not permit that action
- *          '5XX':
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
  *              description: Unexpected error.
  *
  */

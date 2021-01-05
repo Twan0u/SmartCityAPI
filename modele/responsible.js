@@ -1,7 +1,11 @@
 module.exports.addResponsible = async (idTutor, idPupil, client) => {
-    const {rows: id} = await client.query(`
-        INSERT INTO Responsible(IdTutor,IdPupil)
-        VALUES($1,$2)
-        RETURNING id;`, [idTutor, idPupil]);
-    return id;
+    try {
+        await client.query(`
+            INSERT INTO Responsible(IdTutor, IdPupil)
+            VALUES ($1, $2);
+            `, [idTutor, idPupil]);
+    }catch(error){
+        console.log(error);
+        throw 'database error when tried to addResponsible in model/responsible';
+    }
 }

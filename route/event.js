@@ -33,12 +33,12 @@ const permit = require('../middleware/roleAuth').permit;
  *                          items:
  *                              $ref: '#/components/schemas/Event'
  *          '401':
- *              description: Authorization information is missing or invalid.
+ *              description: Auth is needed to perform this action.
  *          '403':
  *              description: The role of the user does not permit that action
- *          '404':
- *              description: No event was found
- *          '5XX':
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
  *              description: Unexpected error.
  *
  */
@@ -72,12 +72,12 @@ router.get('/',authToken,permit("teacher","pupil"), EventControleur.getEvents);
  *                          items:
  *                              $ref: '#/components/schemas/Event'
  *          '401':
- *              description: Authorization information is missing or invalid.
+ *              description: Auth is needed to perform this action.
  *          '403':
  *              description: The role of the user does not permit that action
- *          '404':
- *              description: No task was found
- *          '5XX':
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
  *              description: Unexpected error.
  *
  */
@@ -111,14 +111,13 @@ router.get('/today',authToken,permit("teacher","pupil"), EventControleur.getToda
  *                          items:
  *                              $ref: '#/components/schemas/Event'
  *          '401':
- *              description: Authorization information is missing or invalid.
+ *              description: Auth is needed to perform this action.
  *          '403':
  *              description: The role of the user does not permit that action
- *          '404':
- *              description: No task was found
- *          '5XX':
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
  *              description: Unexpected error.
- *
  */
 router.get('/week',authToken,permit("teacher","pupil"), EventControleur.getWeekEvents);
 
@@ -172,13 +171,17 @@ router.get('/week',authToken,permit("teacher","pupil"), EventControleur.getWeekE
  *                  schema:
  *                      $ref: '#/components/schemas/EventInput'
  *      responses:
- *          '200':
+ *          '201':
  *              description: Object has been added
+ *          '400':
+ *              description: body of request incomplete or wrong
  *          '401':
- *              description: Authorization information is missing or invalid.
+ *              description: Auth is needed to perform this action.
  *          '403':
  *              description: The role of the user does not permit that action
- *          '5XX':
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
  *              description: Unexpected error.
  *
  */
@@ -210,12 +213,16 @@ router.post('/',authToken,permit("teacher"), EventControleur.postEvent);
  *                      $ref: '#/components/schemas/EventInput'
  *      responses:
  *          '200':
- *              description: Object has been changed
+ *              description: Object has been added
+ *          '400':
+ *              description: body of request invalid or id in url path not valid
  *          '401':
- *              description: Authorization information is missing or invalid.
+ *              description: Auth is needed to perform this action.
  *          '403':
  *              description: The role of the user does not permit that action
- *          '5XX':
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
  *              description: Unexpected error.
  *
  */
@@ -240,12 +247,16 @@ router.post('/:id/update',authToken,permit("teacher"), EventControleur.updateEve
  *          required: true
  *      responses:
  *          '200':
- *              description: Object has been added
+ *              description: Object has been deleted
+ *          '400':
+ *              description: id in url path not valid
  *          '401':
- *              description: Authorization information is missing or invalid.
+ *              description: Auth is needed to perform this action.
  *          '403':
  *              description: The role of the user does not permit that action
- *          '5XX':
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
  *              description: Unexpected error.
  *
  */

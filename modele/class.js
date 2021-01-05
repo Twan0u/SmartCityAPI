@@ -16,10 +16,19 @@
  *              classname: '2B'
  */
 module.exports.getClass = async (idClass, client) => {
-    const {rows: classes} = await client.query(`
-        SELECT ID, CONCAT(Year, Letter) AS classname
-        FROM Class 
-        WHERE ID = $1`, [idClass]);
-    return classes[0];
+    try {
+
+        const {rows: classes} = await client.query(`
+            SELECT ID, CONCAT(Year, Letter) AS classname
+            FROM Class
+            WHERE ID = $1
+            `, [idClass]);
+
+        return classes[0];
+
+    }catch (error){
+        console.log(error);
+        throw 'database error in modele/class function getClass';
+    }
 }
 

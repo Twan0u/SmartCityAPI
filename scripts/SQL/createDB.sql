@@ -65,9 +65,9 @@ CREATE TABLE Event(
 );
 INSERT INTO Event(Name, Date, Description, IdClass)
 VALUES
-('Piscine','2020-12-20','Prendre Maillot De Bain',1),
-('Sortie au musée','2020-12-30','Avec son masque',1),
-('Piscine','2020-12-26','Prendre Maillot De Bain',1);
+('Piscine','2020-12-31','Prendre Maillot De Bain',1),
+('Fin Du Monde V2','2021-01-01','et bonne année',1),
+('Covid-20','2021-01-10','par ce que 20>19 haha ',1);
 
 
 DROP TABLE IF EXISTS Pupil CASCADE;
@@ -106,7 +106,8 @@ CREATE TABLE Responsible(
 );
 INSERT INTO Responsible(IdPupil,IdTutor)
 VALUES
-(1,1);
+(1,1),
+(1,2);
 
 
 DROP TABLE IF EXISTS Task CASCADE;
@@ -120,24 +121,20 @@ CREATE TABLE Task(
 );
 INSERT INTO Task(Title, Date, IdSchoolSubjectSubCategory, IdClass)
 VALUES
-('tache de test 1','2020-12-8',1,1),
-('tache de test 2','2020-12-9',2,1),
-('tache de test 3','2020-12-10',3,1),
-('tache de test 4','2020-12-11',4,1),
-('tache de test 5','2020-12-12',5,1),
-('tache de test 6','2020-12-13',1,1),
-('tache de test 7','2020-12-14',2,1),
-('tache de test 8','2020-12-15',3,1),
-('tache de test 9','2020-12-16',4,1),
-('tache de test 10','2020-12-17',5,1),
-('tache de test 11','2020-11-18',1,1),
-('tache de test 12','2020-11-19',2,1),
-('tache de test 13','2020-11-20',3,1),
-('tache de test 14','2020-11-21',4,1),
-('tache de test 15','2020-11-22',5,1),
-('tache de test 16','2020-11-23',1,1),
-('tache de test 17','2020-11-24',2,1),
-('tache de test 18','2020-11-25',3,1);
+('préparer le nouvel an','2020-12-30',2,1),
+('veille du nouvel an','2020-12-31',2,1),
+('nouvel an','2021-01-01',2,1),
+('deux janvier','2021-01-02',3,1),
+('je n ai plus d idee de noms','2021-01-03',2,1),
+('du coup','2021-01-04',2,1),
+('bip','2021-01-05',2,1),
+('bop','2021-01-06',3,1),
+('bip','2021-01-07',2,1),
+('bop','2021-01-08',3,1),
+('bip','2021-01-09',2,1),
+('bop','2021-01-10',3,1),
+('bip','2021-01-11',2,1),
+('bop','2021-01-12',3,1);
 
 
 
@@ -147,9 +144,8 @@ CREATE TABLE Test(
     Title Varchar(255) NOT NULL,
     MaxValue INT NOT NULL,
     Date DATE NOT NULL,
-
     IdSchoolSubjectSubCategory INT REFERENCES SchoolSubjectSubCategory(ID) NOT NULL,
-    IdClass INT REFERENCES Class(ID)
+    IdClass INT REFERENCES Class(ID) NOT NULL
 );
 INSERT INTO Test(Title, MaxValue,Date, IdSchoolSubjectSubCategory, IdClass)
 VALUES

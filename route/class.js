@@ -15,6 +15,8 @@ const permit = require('../middleware/roleAuth').permit;
  *      summary: Returns the class in which the user is a teacher or a student.
  *      tags:
  *          - class
+ *          - pupilRole
+ *          - teacherRole
  *      security:
  *          - bearerAuth: []
  *          # permit todo
@@ -33,12 +35,12 @@ const permit = require('../middleware/roleAuth').permit;
  *                      schema:
  *                          $ref: '#/components/schemas/Class'
  *          '401':
- *              description: Authorization information is missing or invalid.
+ *              description: Auth is needed to perform this action.
  *          '403':
  *              description: The role of the user does not permit that action
- *          '404':
- *              description: Class of the user not found
- *          '5XX':
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
  *              description: Unexpected error.
  *
  */
@@ -51,7 +53,8 @@ router.get('/',authToken,permit("teacher","pupil"), ClassController.getClass);
  *      summary: Returns the class teacher
  *      tags:
  *          - class
- *          - teacher
+ *          - teacherRole
+ *          - pupilRole
  *      security:
  *          - bearerAuth: []
  *          #permit todo
@@ -70,12 +73,12 @@ router.get('/',authToken,permit("teacher","pupil"), ClassController.getClass);
  *                      schema:
  *                          $ref: '#/components/schemas/ClassTeacher'
  *          '401':
- *              description: Authorization information is missing or invalid.
+ *              description: Auth is needed to perform this action.
  *          '403':
  *              description: The role of the user does not permit that action
- *          '404':
- *              description: Class of the user not found
- *          '5XX':
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
  *              description: Unexpected error.
  *
  */
@@ -88,7 +91,7 @@ router.get('/teacher',authToken,permit("teacher","pupil"), TeacherController.get
  *      summary: Returns the pupils in the class
  *      tags:
  *          - class
- *          - pupils
+ *          - teacherRole
  *      security:
  *          - bearerAuth: []
  *          #permit todo
@@ -107,12 +110,12 @@ router.get('/teacher',authToken,permit("teacher","pupil"), TeacherController.get
  *                      schema:
  *                          $ref: '#/components/schemas/Pupil'
  *          '401':
- *              description: Authorization information is missing or invalid.
+ *              description: Auth is needed to perform this action.
  *          '403':
  *              description: The role of the user does not permit that action
- *          '404':
- *              description: Class of the user not found
- *          '5XX':
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
  *              description: Unexpected error.
  *
  */

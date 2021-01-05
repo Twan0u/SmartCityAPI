@@ -9,11 +9,9 @@ let TutorDB = require ("../modele/tutor");
 
 module.exports.getToken = async (req, res) => {
     const client = await pool.connect();
+
     const username = req.body.username;
     const password = req.body.password;
-
-    console.log("login with :" + req.body);
-
 
     let user = undefined;
 
@@ -28,22 +26,33 @@ module.exports.getToken = async (req, res) => {
         if(user === undefined){
             user = await TutorDB.loginTutor(username, client);
         }
-    } catch (error){
-        return res.sendStatus(500);
-    } finally {
-        client.release();
-    }
 
-   if(user === undefined) {//if no user with that login
-       return res.sendStatus(404);
-   }else{
-       if(await bcrypt.compare(password,user.password)){
-           delete user.password;//prevent password to be passed in the jwt
-           const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET,{ expiresIn: process.env.ACCESS_TOKEN_TIMEOUT });
-           res.json(accessToken);
-           delete user.password;
+
+       if(user === undefined) {//if no user with that login
+           return res.sendStatus(404);
        }else{
-           return res.sendStatus(401);//if code is wrong
+           if(await bcrypt.compare(password,user.password)){
+
+               delete user.password;//prevent password to be passed in the jwt
+               const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET,{ expiresIn: process.env.ACCESS_TOKEN_TIMEOUT });
+
+               res.json(accessToken);
+
+           }else{
+
+               return res.sendStatus(401);//if code is wrong
+
+           }
        }
-   }
+    } catch (error){
+
+        res.sendStatus(500);
+        console.log("ERROR in Login")
+        console.log(error);
+
+    } finally {
+
+        client.release();
+
+    }
 };

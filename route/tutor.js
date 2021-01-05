@@ -5,7 +5,7 @@ const authToken = require("../middleware/authToken").authToken;
 const permit = require('../middleware/roleAuth').permit;
 /**
  * @swagger
- * /pupils:
+ * /tutor/pupils:
  *  get:
  *      summary: Returns all the pupils of a tutor (with tokens)
  *      tags:
@@ -37,12 +37,12 @@ const permit = require('../middleware/roleAuth').permit;
  *                                  token:
  *                                      type: string
  *          '401':
- *              description: Authorization information is missing or invalid.
+ *              description: Auth is needed to perform this action.
  *          '403':
  *              description: The role of the user does not permit that action
- *          '404':
- *              description: No task was found
- *          '5XX':
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
  *              description: Unexpected error.
  *
  */
@@ -82,16 +82,23 @@ router.get('/pupils',authToken,permit("tutor"), TutorController.getPupils);
  *      responses:
  *          '200':
  *              description: relation has been added
+ *          '400':
+ *              description: body of request is invalid
  *          '401':
- *              description: Authorization information is missing or invalid.
+ *              description: Auth is needed to perform this action. OR pupil user/password is wrong
  *          '403':
  *              description: The role of the user does not permit that action
- *          '5XX':
+ *          '404':
+ *              description: pupil not found
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
  *              description: Unexpected error.
  *
  *
  */
 router.post('/add/pupil',authToken,permit("tutor"), TutorController.addPupil);
 
+//400 ID IN path wrong
 //router.patch('/test/sign/:id',TutorController.signTest);//todo
 module.exports = router;

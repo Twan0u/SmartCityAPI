@@ -2,133 +2,167 @@ const pool = require("../modele/database");
 const TestModel = require("../modele/test");
 
 module.exports.getTests = async (req, res) => {
+
     const client = await pool.connect();
-    const idClass = req.user.idclass;
+
     try{
-        let tests = await TestModel.getTests(idClass, client);
-        if(tests !== undefined){
-            res.status(200).json(tests);
-        } else {
-            res.sendStatus(404);
-        }
+
+        let tests = await TestModel.getTests(req.user.idclass, client);
+        res.status(200).json(tests);
 
     } catch (error){
+
         res.sendStatus(500);
+        console.log("ERROR in Controller/test with function getTests");
+        console.log(error);
+
     } finally {
+
         client.release();
+
     }
 }
 
 module.exports.getTodayTests = async (req, res) => {
+
     const client = await pool.connect();
-    const idClass = req.user.idclass
+
     try{
-        let tests = await TestModel.getTodayTestsByClassId(idClass, client);
-        if(tests !== undefined){
-            res.status(200).json(tests);
-        } else {
-            res.sendStatus(404);
-        }
+
+        let tests = await TestModel.getTodayTestsByClassId(req.user.idclass, client);
+        res.status(200).json(tests);
+
     } catch (error){
+
         res.sendStatus(500);
+        console.log("ERROR in Controller/test with function getTodayTests");
+        console.log(error);
+
     } finally {
+
         client.release();
+
     }
 }
 
 module.exports.getWeekTests = async (req, res) => {
+
     const client = await pool.connect();
-    const idClass = req.user.idclass;
+
     try{
-        let tests = await TestModel.getWeekTestsByClassId(idClass, client);
-        if(tests !== undefined){
-            res.status(200).json(tests);
-        } else {
-            res.sendStatus(404);
-        }
+
+        let tests = await TestModel.getWeekTestsByClassId(req.user.idclass, client);
+        res.status(200).json(tests);
+
     } catch (error){
+
         res.sendStatus(500);
+        console.log("ERROR in Controller/test with function getWeekTests");
+        console.log(error);
+
     } finally {
+
         client.release();
+
     }
 }
 
 module.exports.addTest = async (req, res) => {
+
     const client = await pool.connect();
-    const idClass = req.user.idclass;
-    const {title, maxValue, date, idSchoolSubjectSubCategory} = req.body;
+
     try{
-        await TestModel.addTest(title, maxValue, date, idSchoolSubjectSubCategory, idClass, client);
+
+        const {title, maxvalue, date, idSchoolSubjectSubCategory} = req.body;
+
+        if(!title||!maxvalue||!date||!idSchoolSubjectSubCategory){return res.sendStatus(400);}//missing data for post
+
+        await TestModel.addTest(title, maxvalue, date, idSchoolSubjectSubCategory, req.user.idclass, client);
         res.sendStatus(200);
+
     } catch (error){
+
         res.sendStatus(500);
+        console.log("ERROR in Controller/test with function addTest");
+        console.log(error);
+
     } finally {
+
         client.release();
+
     }
 }
 
-
 module.exports.updateTest = async(req, res) => {
+
     const client = await pool.connect();
-    const idClass = req.user.idclass;
-    const idTestText = req.params.id; //attention ! Il s'agit de texte !
 
-    const {title, maxValue, date, idSchoolSubjectSubCategory} = req.body;
+    try{
+    console.log(req.body);
+    const {title, maxvalue, date, idSchoolSubjectSubCategory} = req.body;
+    if(!title||!maxvalue||!date||!idSchoolSubjectSubCategory){return res.sendStatus(400);}//missing data for post
 
-    const idTest = parseInt(idTestText);
-    if(isNaN(idTest)){
-        res.sendStatus(400);
-    } else {
-        try{
-            const response = TestModel.updateTest(idTest, title, maxValue, date, idSchoolSubjectSubCategory, idClass,client);
-            if(response){
-                res.sendStatus(200);
-            } else {
-                res.sendStatus(404);
-            }
-        } catch (error){
-            res.sendStatus(500);
-        } finally {
-            client.release();
-        }
+    const id = parseInt(req.params.id);
+    if(isNaN(id)){return res.sendStatus(400);}//check if param id exist and is a number
+
+    await TestModel.updateTest(id, title, maxvalue, date, idSchoolSubjectSubCategory, req.user.idclass, client);
+    res.sendStatus(200);
+
+    } catch (error){
+
+        res.sendStatus(500);
+        console.log("ERROR in Controller/test with function updateTest");
+        console.log(error);
+
+    } finally {
+
+        client.release();
+
     }
 }
 
 module.exports.deleteTest = async (req, res) => {
+
     const client = await pool.connect();
+
     try{
-        const idTestText = req.params.id; //attention ! Il s'agit de texte !
-        const idTest = parseInt(idTestText);
-        if(isNaN(idTest)){
-            res.sendStatus(400);
-        } else {
-            const response = TestModel.deleteTest(idTest,client);
-            if(response){
-                res.sendStatus(200);
-            } else {
-                res.sendStatus(404);
-            }
-        }
+        const id = parseInt(req.params.id);
+        if(isNaN(id)){return res.sendStatus(400);}//check if param id exist and is a number
+
+        await TestModel.deleteTest(id,client);
+        res.sendStatus(200);
+
     } catch (error){
+
         res.sendStatus(500);
+        console.log("ERROR in Controller/test with function deleteTest");
+        console.log(error);
+
     } finally {
+
         client.release();
+
     }
 }
 
 module.exports.getUnsigned = async (req, res) => {
+
     const client = await pool.connect();
-    const idPupil = req.user.id;
+
     try{
-        const response = TestModel.getUnsignedTests(idPupil, client);
-        if(response){
-            res.sendStatus(200);
-        } else {
-            res.sendStatus(404);
-        }
+
+        const response = await TestModel.getUnsignedTests(req.user.id, client);
+        res.status(200).json(response);
+
     } catch (error){
+
         res.sendStatus(500);
+        console.log("ERROR in Controller/test with function getUnsigned");
+        console.log(error);
+
     } finally {
+
         client.release();
+
     }
 }

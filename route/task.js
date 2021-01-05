@@ -33,12 +33,12 @@ const permit = require('../middleware/roleAuth').permit;
  *                          items:
  *                              $ref: '#/components/schemas/Task'
  *          '401':
- *              description: Authorization information is missing or invalid.
+ *              description: Auth is needed to perform this action.
  *          '403':
  *              description: The role of the user does not permit that action
- *          '404':
- *              description: No task was found
- *          '5XX':
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
  *              description: Unexpected error.
  *
  */
@@ -72,12 +72,12 @@ router.get('/',authToken,permit("teacher","pupil"), TaskController.getTasks);
  *                          items:
  *                              $ref: '#/components/schemas/Task'
  *          '401':
- *              description: Authorization information is missing or invalid.
+ *              description: Auth is needed to perform this action.
  *          '403':
  *              description: The role of the user does not permit that action
- *          '404':
- *              description: No task was found
- *          '5XX':
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
  *              description: Unexpected error.
  *
  */
@@ -111,12 +111,12 @@ router.get('/today',authToken,permit("teacher","pupil"), TaskController.getToday
  *                          items:
  *                              $ref: '#/components/schemas/Task'
  *          '401':
- *              description: Authorization information is missing or invalid.
+ *              description: Auth is needed to perform this action.
  *          '403':
  *              description: The role of the user does not permit that action
- *          '404':
- *              description: No task was found
- *          '5XX':
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
  *              description: Unexpected error.
  *
  */
@@ -143,7 +143,7 @@ router.get('/week',authToken,permit("teacher","pupil"), TaskController.getWeekTa
  *          example:
  *              title: 'ramener argent photo de classe'
  *              date: '2020-11-30'
- *              category: 'Géométrie'
+ *              type: 'Devoir'
  *              idSchoolSubjectSubCategory: 2
  *          required:
  *              - title
@@ -178,11 +178,15 @@ router.get('/week',authToken,permit("teacher","pupil"), TaskController.getWeekTa
  *      responses:
  *          '200':
  *              description: Object has been added
+ *          '400':
+ *              description: body of request is invalid
  *          '401':
- *              description: Authorization information is missing or invalid.
+ *              description: Auth is needed to perform this action.
  *          '403':
  *              description: The role of the user does not permit that action
- *          '5XX':
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
  *              description: Unexpected error.
  *
  */
@@ -214,11 +218,15 @@ router.post('/',authToken,permit("teacher"), TaskController.postTask);
  *      responses:
  *          '200':
  *              description: Object has been added
+ *          '400':
+ *              description: body of request or id in url is invalid
  *          '401':
- *              description: Authorization information is missing or invalid.
+ *              description: Auth is needed to perform this action.
  *          '403':
  *              description: The role of the user does not permit that action
- *          '5XX':
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
  *              description: Unexpected error.
  *
  */
@@ -244,11 +252,15 @@ router.post('/:id/update',authToken,permit("teacher"), TaskController.updateTask
  *      responses:
  *          '200':
  *              description: Object has been deleted
+ *          '400':
+ *              description: id in url path is invalid
  *          '401':
- *              description: Authorization information is missing or invalid.
+ *              description: Auth is needed to perform this action.
  *          '403':
  *              description: The role of the user does not permit that action
- *          '5XX':
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
  *              description: Unexpected error.
  *
  */

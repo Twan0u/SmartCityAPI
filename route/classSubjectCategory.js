@@ -11,8 +11,8 @@ const permit = require('../middleware/roleAuth').permit;
  *  get:
  *      summary: Returns the class subject categories at this school
  *      tags:
- *          - categories
- *          - pupilsRole
+ *          - school_subject_category
+ *          - pupilRole
  *          - teacherRole
  *      security:
  *          - bearerAuth: []
@@ -32,12 +32,12 @@ const permit = require('../middleware/roleAuth').permit;
  *                      schema:
  *                          $ref: '#/components/schemas/Categories'
  *          '401':
- *              description: Authorization information is missing or invalid.
+ *              description: Auth is needed to perform this action.
  *          '403':
  *              description: The role of the user does not permit that action
- *          '404':
- *              description: Class of the user not found
- *          '5XX':
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
  *              description: Unexpected error.
  *
  */

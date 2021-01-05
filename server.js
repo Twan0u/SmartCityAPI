@@ -13,7 +13,12 @@ const swaggerUi = require('swagger-ui-express');
 const swaggerDoc = require('./swagger/swagger_jsdoc').swaggerDoc;
 
 //Middlewares
-app.use(express.json());
+try {
+    app.use(express.json());
+}catch(e){
+    res.sendStatus(400);
+    console.log("ERROR : The body of the request does not contains an valid json");
+}
 
 //CORS
 app.use((req, res, next) => {
