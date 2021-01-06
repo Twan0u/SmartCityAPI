@@ -63,6 +63,26 @@ module.exports.getWeekTasks = async (req, res) => {
     }
 }
 
+module.exports.getWeekTasksCount = async (req, res) => {
+
+    const client = await pool.connect();
+
+    try{
+
+        let tasks = await TaskModel.getWeekTasksByClassId(req.user.idclass, client);
+        res.status(200).json(tasks?.length);
+
+    } catch (error){
+
+        res.sendStatus(500);
+        console.log("ERROR in Controller/tasks with function getWeekTasks");
+        console.log(error);
+
+    } finally {
+        client.release();
+    }
+}
+
 module.exports.postTask = async (req, res) => {
 
     const client = await pool.connect();

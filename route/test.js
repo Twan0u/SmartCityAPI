@@ -85,6 +85,39 @@ router.get('/unsigned',authToken,permit("pupil"), TestController.getUnsigned);
 
 /**
  * @swagger
+ * /tests/unsigned/count:
+ *  get:
+ *      summary: Returns the number of tests that are not signed by the user
+ *      tags:
+ *          - test
+ *          - pupilRole
+ *      security:
+ *          - bearerAuth: []
+ *          # permit todo
+ *      parameters:
+ *        - in: header
+ *          name: Authorization
+ *          schema:
+ *            type: string
+ *            format: JWT
+ *          required: true
+ *      responses:
+ *          '200':
+ *              description: the number of unsigned tests
+ *          '401':
+ *              description: Auth is needed to perform this action.
+ *          '403':
+ *              description: The role of the user does not permit that action
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
+ *              description: Unexpected error.
+ *
+ */
+router.get('/unsigned/count',authToken,permit("pupil"), TestController.getUnsignedCount);
+
+/**
+ * @swagger
  * /tests/today:
  *  get:
  *      summary: Returns all the tests of that user for today

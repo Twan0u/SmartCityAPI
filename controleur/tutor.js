@@ -15,7 +15,7 @@ module.exports.getPupils = async (req, res) => {
 
         let pupils = await TutorModel.getPupils(req.user.id,client);
 
-        let response = [{}];
+        let response = [];
 
         for(let i=0;i<pupils.length;i++){
             response[i] = {};

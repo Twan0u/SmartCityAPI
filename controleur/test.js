@@ -166,3 +166,24 @@ module.exports.getUnsigned = async (req, res) => {
 
     }
 }
+module.exports.getUnsignedCount = async (req, res) => {
+
+    const client = await pool.connect();
+
+    try{
+
+        const response = await TestModel.getUnsignedTests(req.user.id, client);
+        res.status(200).json(response?.length);
+
+    } catch (error){
+
+        res.sendStatus(500);
+        console.log("ERROR in Controller/test with function getUnsigned");
+        console.log(error);
+
+    } finally {
+
+        client.release();
+
+    }
+}
