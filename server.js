@@ -40,7 +40,7 @@ app.use((req, res, next) => {
 app.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerDoc));
 app.use(Router);
 
-app.listen(httpPort, () => {
+let server = app.listen(httpPort, () => {
     console.log(`The app is listening on port : ${httpPort}`);
 });
 
