@@ -102,7 +102,8 @@ DROP TABLE IF EXISTS Responsible CASCADE;
 CREATE TABLE Responsible(
     ID SERIAL PRIMARY KEY,
     IdTutor INT REFERENCES Tutor(ID) NOT NULL,
-    IdPupil INT REFERENCES Pupil(ID) NOT NULL
+    IdPupil INT REFERENCES Pupil(ID) NOT NULL,
+    UNIQUE(IdTutor,IdPupil)
 );
 INSERT INTO Responsible(IdPupil,IdTutor)
 VALUES

@@ -52,7 +52,11 @@ module.exports.addPupil = async (req, res) => {
 
         if (!pupil_username || !pupil_password){return res.sendStatus(400);}//bad request : nothing in body
 
-        //todo gérer les ajout multiples du meme enfant par la meme personne
+        let already_inserted_pupils = await TutorModel.getPupils(req.user.id,client);
+
+        for (let pupil of already_inserted_pupils) {
+            if(pupil?.login===pupil_username){return res.sendStatus(409);}
+        }
 
         let pupil = await PupilModel.loginPupil(pupil_username, client);
 

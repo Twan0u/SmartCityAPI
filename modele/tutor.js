@@ -19,7 +19,7 @@ module.exports.getPupils = async (id, client) => {
     try {
 
         const {rows: pupils} = await client.query(`
-            select Pupil.id,
+            select DISTINCT Pupil.id,
                    Pupil.login,
                    Pupil.firstname,
                    Pupil.lastname,
@@ -29,7 +29,7 @@ module.exports.getPupils = async (id, client) => {
             from Pupil
                      INNER JOIN Responsible ON Pupil.id = Responsible.idpupil
                      INNER JOIN Tutor ON Responsible.idTutor = Tutor.id
-            where Tutor.id = $1
+            where Tutor.id = $1;
         `, [id]);
         return pupils;
 

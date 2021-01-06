@@ -90,6 +90,8 @@ router.get('/pupils',authToken,permit("tutor"), TutorController.getPupils);
  *              description: The role of the user does not permit that action
  *          '404':
  *              description: pupil not found
+ *          '409':
+ *              description: the pupil is already linked to this tutor
  *          '498':
  *              description: The token is invalid or deprecicated
  *          '500':
