@@ -83,38 +83,6 @@ router.get('/',authToken,permit("teacher","pupil"), TestController.getTests);
  */
 router.get('/unsigned',authToken,permit("pupil"), TestController.getUnsigned);
 
-/**
- * @swagger
- * /tests/unsigned/count:
- *  get:
- *      summary: Returns the number of tests that are not signed by the user
- *      tags:
- *          - test
- *          - pupilRole
- *      security:
- *          - bearerAuth: []
- *          # permit todo
- *      parameters:
- *        - in: header
- *          name: Authorization
- *          schema:
- *            type: string
- *            format: JWT
- *          required: true
- *      responses:
- *          '200':
- *              description: the number of unsigned tests
- *          '401':
- *              description: Auth is needed to perform this action.
- *          '403':
- *              description: The role of the user does not permit that action
- *          '498':
- *              description: The token is invalid or deprecicated
- *          '500':
- *              description: Unexpected error.
- *
- */
-router.get('/unsigned/count',authToken,permit("pupil"), TestController.getUnsignedCount);
 
 /**
  * @swagger
@@ -193,6 +161,8 @@ router.get('/today',authToken,permit("teacher","pupil"), TestController.getToday
  *
  */
 router.get('/week',authToken,permit("teacher","pupil"), TestController.getWeekTests);
+
+
 
 /**
  * @swagger
@@ -304,6 +274,43 @@ router.post('/',authToken,permit("teacher"), TestController.addTest);
  *
  */
 router.patch('/:id',authToken,permit("teacher"), TestController.updateTest);
+
+/**
+ * @swagger
+ * /tests/id/sign:
+ *  post:
+ *      summary: let the tutor sign a test for it's child
+ *      tags:
+ *          - tutorRole
+ *          - test
+ *      security:
+ *          - bearerAuth: []
+ *          # permit todo
+ *      parameters:
+ *        - in: header
+ *          name: Authorization
+ *          schema:
+ *            type: string
+ *            format: JWT
+ *          required: true
+ *      responses:
+ *          '200':
+ *              description: Test has been signed
+ *          '400':
+ *              description: body of request is invalid
+ *          '401':
+ *              description: Auth is needed to perform this action.
+ *          '403':
+ *              description: The role of the user does not permit that action
+ *          '404':
+ *              description: Test does not exist
+ *          '498':
+ *              description: The token is invalid or deprecicated
+ *          '500':
+ *              description: Unexpected error.
+ *
+ */
+router.post('/:id/sign',authToken,permit("tutor"), TestController.signTest);
 
 /**
  * @swagger

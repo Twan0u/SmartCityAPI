@@ -68,27 +68,6 @@ module.exports.getWeekEvents = async (req, res) => {
     }
 }
 
-module.exports.getWeekEventsCount = async (req, res) => {
-
-    const client = await pool.connect();
-
-    try{
-
-        const events = await EventModel.getWeekEventsByClassId(req.user.idclass,client);
-        res.status(200).json(events?.length);
-
-    } catch (error){
-
-        res.sendStatus(500);
-        console.log("ERROR in Controller/class with function getWeekEvents")
-        console.log(error);
-
-    } finally {
-
-        client.release();
-
-    }
-}
 
 module.exports.postEvent= async(req, res) => {
 

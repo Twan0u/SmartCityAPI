@@ -122,39 +122,6 @@ router.get('/today',authToken,permit("teacher","pupil"), TaskController.getToday
  */
 router.get('/week',authToken,permit("teacher","pupil"), TaskController.getWeekTasks);
 
-/**
- * @swagger
- * /tasks/week/count:
- *  get:
- *      summary: Returns the number of tasks due for the class from tomorrow to the end of the week
- *      tags:
- *          - task
- *          - teacherRole
- *          - pupilRole
- *      security:
- *          - bearerAuth: []
- *          # permit todo
- *      parameters:
- *        - in: header
- *          name: Authorization
- *          schema:
- *            type: string
- *            format: JWT
- *          required: true
- *      responses:
- *          '200':
- *              description: the number of task due for the next week
- *          '401':
- *              description: Auth is needed to perform this action.
- *          '403':
- *              description: The role of the user does not permit that action
- *          '498':
- *              description: The token is invalid or deprecicated
- *          '500':
- *              description: Unexpected error.
- *
- */
-router.get('/week/count',authToken,permit("teacher","pupil"), TaskController.getWeekTasksCount);
 
 /**
  * @swagger

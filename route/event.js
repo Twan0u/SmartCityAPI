@@ -120,38 +120,7 @@ router.get('/today',authToken,permit("teacher","pupil"), EventControleur.getToda
  *              description: Unexpected error.
  */
 router.get('/week',authToken,permit("teacher","pupil"), EventControleur.getWeekEvents);
-/**
- * @swagger
- * /events/week:
- *  get:
- *      summary: Returns the number of events for the class for the week
- *      tags:
- *          - event
- *          - teacherRole
- *          - pupilRole
- *      security:
- *          - bearerAuth: []
- *          # permit todo
- *      parameters:
- *        - in: header
- *          name: Authorization
- *          schema:
- *            type: string
- *            format: JWT
- *          required: true
- *      responses:
- *          '200':
- *              description: number of events this week
- *          '401':
- *              description: Auth is needed to perform this action.
- *          '403':
- *              description: The role of the user does not permit that action
- *          '498':
- *              description: The token is invalid or deprecicated
- *          '500':
- *              description: Unexpected error.
- */
-router.get('/week/count',authToken,permit("teacher","pupil"), EventControleur.getWeekEventsCount);
+
 /**
  * @swagger
  *  components:

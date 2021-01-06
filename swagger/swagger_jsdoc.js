@@ -6,7 +6,7 @@ const options = {
         openapi: '3.0.0',
         info: {
             title: 'API SmartClass', // Title (required)
-            version: '2.1.0', // Version (required)
+            version: '2.1.3', // Version (required)
         },
     },
     // Path to the API docs

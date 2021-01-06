@@ -102,10 +102,6 @@ CREATE TABLE TestResult(
 );
 
 
-
-
-
-
 INSERT INTO Teacher (FirstName,LastName,Login,Password,IdClass)
 VALUES
 ('Antoine','Lambert','ant.lamb.al@gmail.com','$2b$10$yzm9ReqMyLPZ4zBbuTUoPeeDRnCe1zCcM/OMGgOOv0P7.vSSMdDqq',1),

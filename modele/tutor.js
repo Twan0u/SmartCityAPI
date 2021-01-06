@@ -75,21 +75,3 @@ module.exports.add = async (login,password,firstname,lastname,phone,client) => {
 
     }
 }
-
-module.exports.signTest = async (idTest,idTutor,client) => {
-    try {
-
-        const {rows: user} = await client.query(`
-            UPDATE TestResult
-            SET signedby = $2
-            WHERE id = $1;
-        `, [idTest,idTutor]);
-        return user;
-
-    }catch(error){
-
-        console.log(error);
-        throw 'database error in modele/tutor function signTest';
-
-    }
-}

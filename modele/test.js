@@ -142,6 +142,22 @@ module.exports.addTest = async (title, maxValue, date, idSchoolSubjectSubCategor
     }
 }
 
+module.exports.signTest = async (idTutor, idTestResult, client) => {
+    try{
+
+        await client.query(`
+            UPDATE testresult
+            SET 
+                 signedby = $1
+            WHERE id = $2
+            `, [idTutor,idTestResult]);
+
+    }catch (error){
+        console.log(error);
+        throw 'database error in modele/test function updateTest';
+    }
+}
+
 module.exports.updateTest = async (id,title, maxValue, date, idSchoolSubjectSubCategory, idClass, client) => {
     try{
 

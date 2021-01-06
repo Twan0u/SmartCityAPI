@@ -81,31 +81,3 @@ module.exports.addPupil = async (req, res) => {
 
     }
 }
-
-module.exports.signTest = async(req, res) => {
-
-    const client = await pool.connect();
-
-    try{
-
-        const id = parseInt(req.params.id);
-        if(isNaN(id)){return res.sendStatus(400);}//check if param id exist and is a number
-
-        //todo vérifier que le tuteur à bien l'authorisation de signer ce document
-
-        await TutorModel.signTest(id,req.user.id,client);
-        res.sendStatus(200);
-
-    } catch (error){
-
-        res.sendStatus(500);
-        console.log("ERROR in Controller/tutor with function signTest");
-        console.log(error);
-
-    } finally {
-
-        client.release();
-
-    }
-}
-
