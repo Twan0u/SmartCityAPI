@@ -43,3 +43,11 @@ app.use(Router);
 app.listen(httpPort, () => {
     console.log(`The app is listening on port : ${httpPort}`);
 });
+
+process.on('SIGTERM', () => {
+    console.info('SIGTERM signal received.');
+    console.log('Closing http server.');
+    server.close(() => {
+        console.log('Http server closed.');
+    });
+});

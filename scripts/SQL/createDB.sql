@@ -152,30 +152,23 @@ INSERT INTO Responsible(IdPupil,IdTutor)
 VALUES
 (1,1);
 
-INSERT INTO Task(Title, Date, IdSchoolSubjectSubCategory, IdClass)
+INSERT INTO Task(Title,Type, Date, IdSchoolSubjectSubCategory, IdClass)
 VALUES
-('préparer le nouvel an','2020-12-30',2,1),
-('veille du nouvel an','2020-12-31',2,1),
-('nouvel an','2021-01-01',2,1),
-('deux janvier','2021-01-02',3,1),
-('je n ai plus d idee de noms','2021-01-03',2,1),
-('du coup','2021-01-04',2,1),
-('bip','2021-01-05',2,1),
-('bop','2021-01-06',3,1),
-('bip','2021-01-07',2,1),
-('bop','2021-01-08',3,1),
-('bip','2021-01-09',2,1),
-('bop','2021-01-10',3,1),
-('bip','2021-01-11',2,1),
-('bop','2021-01-12',3,1);
+('préparer le nouvel an','devoir','2020-12-30',2,1),
+('veille du nouvel an','','2020-12-31',2,1),
+('nouvel an','','2021-01-01',2,1),
+('Refaire les exercices 1 à 8','devoir',current_date - '1 day':: interval,1,1),
+('Etudier la conjugaison des verbes en er','leçon',current_date,2,1),
+('Etudier la conjugaison des verbes en ir','leçon',current_date+ '1 day':: interval,2,1),
+('Ramener ses crayons de couleurs','devoir',current_date+ '1 week':: interval,5,1);
 
 INSERT INTO Test(Title, MaxValue,Date, IdSchoolSubjectSubCategory, IdClass)
 VALUES
-('Verbes en -ER',20,'2021-01-06',2,1),
-('Pluriel des noms',10,'2021-01-07',1,1),
-('Les carrés',20,'2021-01-08',3,1),
-('Les capitales d Europe',10,'2021-01-09',4,1),
-('Aquarelle',5,'2021-01-10',5,1);
+('Verbes en -ER',20,current_date - '1 day':: interval,2,1),
+('Pluriel des noms',10,current_date,1,1),
+('Les carrés',20,current_date + '1 day':: interval,3,1),
+('Les capitales d Europe',10,current_date + '2 day':: interval,4,1),
+('Aquarelle',5,current_date+ '1 week':: interval,5,1);
 
 INSERT INTO TestResult(Result, note, IdTest, IdPupil)
 VALUES
@@ -183,4 +176,3 @@ VALUES
 (20,'Félicitation',1,2),
 (5,'Bof bof peux mieux faire',2,1),
 (10,'Encore un score parfait',2,2);
-
