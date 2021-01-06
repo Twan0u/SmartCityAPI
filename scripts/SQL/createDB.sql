@@ -175,4 +175,8 @@ VALUES
 (1,'Catastrophique, à revoir',1,1),
 (20,'Félicitation',1,2),
 (5,'Bof bof peux mieux faire',2,1),
-(10,'Encore un score parfait',2,2);
+(10,'Encore un score parfait',2,2),
+(10,'hmmm, limite',3,1),
+(20,'Félicitation',3,2),
+(2,'Bof bof peux mieux faire',4,1),
+(5,'Encore un score parfait',4,2);

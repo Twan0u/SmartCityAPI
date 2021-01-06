@@ -107,7 +107,7 @@ module.exports.getUnsignedTests = async (idPupil, client) => {
     try{
 
         const {rows: tests} = await client.query(`
-            SELECT TestResult.idTest as idTest, test.title as title,TestResult.result as result , TestResult.note as note, test.maxvalue as maxvalue, TO_CHAR(test.date, 'YYYY-MM-DD') as date, SchoolSubjectSubCategory.name as category, SchoolSubjectCategory.name as schoolsubject
+            SELECT TestResult.id as idTest, test.title as title,TestResult.result as result , TestResult.note as note, test.maxvalue as maxvalue, TO_CHAR(test.date, 'YYYY-MM-DD') as date, SchoolSubjectSubCategory.name as category, SchoolSubjectCategory.name as schoolsubject
             FROM TestResult
                 LEFT JOIN Test
             ON Test.id = TestResult.idTest
