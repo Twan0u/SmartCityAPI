@@ -7,7 +7,7 @@ module.exports.getResult = async (req, res) => {
     const client = await pool.connect();
 
     try{
-        let result = [
+       /* let result = [
             {"title":"Francais",
             "average":12,
             "subcat":[
@@ -22,8 +22,8 @@ module.exports.getResult = async (req, res) => {
                     {"title":"Géométrie",
                         "average":10},
                 ]}
-        ];
-        //const result = ResultModel.getResult(id);
+        ];*/
+        const result = await ResultModel.getResult(req.user.idclass,req.user.id,client);
         res.json(result);
 
     } catch (error){

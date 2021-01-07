@@ -24,7 +24,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js",
     "update": "cd .. && git pull",
-    "start": "node server.js",
+    "start": "NODE_ENV=production node server.js",
     "initdb": "node scripts\\JS\\initDB.js",
     "genDoc": "node ./swagger/swagger_jsdoc.js"
   },

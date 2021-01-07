@@ -41,7 +41,7 @@ app.use('/api-docs',swaggerUi.serve,swaggerUi.setup(swaggerDoc));
 app.use(Router);
 
 let server = app.listen(httpPort, () => {
-    console.log(`The app is listening on port : ${httpPort}`);
+    console.log("The app(mode:"+process.env.NODE_ENV + ")is listening on port : "+ httpPort);
 });
 
 process.on('SIGTERM', () => {
