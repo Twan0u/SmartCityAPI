@@ -39,6 +39,28 @@ module.exports.getResult = async (req, res) => {
 
 }
 
+module.exports.getGlobalResult = async (req, res) => {
+
+    const client = await pool.connect();
+
+    try{
+
+        const result = await ResultModel.getGlobalResult(req.user.idclass,req.user.id,client);
+        res.json(result);
+
+    } catch (error){
+
+        console.log(error);
+        res.sendStatus(500);
+
+    } finally {
+
+        client.release();
+
+    }
+
+}
+
 /*module.exports.postResult = (req, res) => {//todo
     const body = req.body;
     const {id, nom, prix} = body;//todo

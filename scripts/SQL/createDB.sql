@@ -114,7 +114,7 @@ VALUES
 ('Français'),
 ('Mathémathiques'),
 ('Eveil'),
-('autres');
+('Autres');
 
 INSERT INTO SchoolSubjectSubCategory(Name, IdSchoolSubjectCategory)
 VALUES
