@@ -160,7 +160,7 @@ VALUES
 ('Refaire les exercices 1 à 8','devoir',current_date - '1 day':: interval,1,1),
 ('Etudier la conjugaison des verbes en er','leçon',current_date,2,1),
 ('Etudier la conjugaison des verbes en ir','leçon',current_date+ '1 day':: interval,2,1),
-('Ramener ses crayons de couleurs','devoir',current_date+ '1 week':: interval,5,1);
+('Somebody once told me the world is gonna roll me I ain''t the sharpest tool in the shed She was looking kind of dumb with her finger and her thumb In the shape of an "L" on her forehead','devoir',current_date+ '1 week':: interval,5,1);
 
 INSERT INTO Test(Title, MaxValue,Date, IdSchoolSubjectSubCategory, IdClass)
 VALUES

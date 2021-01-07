@@ -1,9 +1,9 @@
-const ResultControleur = require("../controleur/result");
+const ResultController = require("../controleur/result");
 const router = require("express").Router();
 
-router.get('/:id', ResultControleur.getResult);
-router.post('/', ResultControleur.postResult);
-router.patch('/', ResultControleur.updateResult);
-router.delete('/', ResultControleur.deleteResult);
+router.get('/', ResultController.getResult);
+//router.post('/', ResultControleur.postResult);
+//router.patch('/', ResultControleur.updateResult);
+//router.delete('/', ResultControleur.deleteResult);
 
 module.exports = router;

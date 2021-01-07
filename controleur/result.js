@@ -1,23 +1,45 @@
-const ResultModele = require("../modele/result");
+const pool = require("../modele/database");
 
-module.exports.getResult = (req, res) => {
-    const idTexte = req.params.id;
-    const id = parseInt(idTexte);
-    if(isNaN(id)){
-        res.sendStatus(400);
-    } else {
-        try{
-            const result = ResultModele.getResult(id);
-            res.json(result);
-        } catch (error){
-            res.sendStatus(500);
-        } finally {
-            client.release();
-        }
+const ResultModel = require("../modele/result");
+
+module.exports.getResult = async (req, res) => {
+
+    const client = await pool.connect();
+
+    try{
+        let result = [
+            {"title":"Francais",
+            "average":12,
+            "subcat":[
+                {"title":"Grammaire",
+                "average":10},
+                {"title":"Conjugaison",
+                    "average":14}
+            ]},
+            {"title":"Math",
+                "average":10,
+                "subcat":[
+                    {"title":"Géométrie",
+                        "average":10},
+                ]}
+        ];
+        //const result = ResultModel.getResult(id);
+        res.json(result);
+
+    } catch (error){
+
+        console.log(error);
+        res.sendStatus(500);
+
+    } finally {
+
+        client.release();
+
     }
+
 }
 
-module.exports.postResult = (req, res) => {//todo
+/*module.exports.postResult = (req, res) => {//todo
     const body = req.body;
     const {id, nom, prix} = body;//todo
     const response = ResultModele.postResult(id, nom, prix);//todo
@@ -46,4 +68,4 @@ module.exports.deleteResult = (req, res) => {//todo
     } else {
         res.sendStatus(500);
     }
-}
+}*/
